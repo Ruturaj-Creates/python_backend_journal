@@ -308,9 +308,3 @@ python -m venv venv
 #    - Deactivate a virtual environment
 deactivate
 
-
-# # git add .
-# # git commit -m "Phase 1 Day 1 - Python Basics Revision"
-# # git push
-# #
-# # ============================================================
