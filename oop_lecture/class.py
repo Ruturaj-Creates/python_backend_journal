@@ -1,5 +1,5 @@
 class Dog:                      #class
-    def __init__(self,name,bread,owner):  # attributes---data in class
+    def __init__(self,name,bread,owner):  # attributes---properties
         self.name=name
         self.bread=bread
         self.owner=owner
@@ -48,18 +48,57 @@ user2=User("ankita","ankita@gmail.com","1234rvd")
 
 #accessing and modifying data
 user1=User("Karan","karan@gmail.com","1234karan")
-print(user1.email)
+# print(user1.email)
 
-user1.email="rvd"
+# user1.email="rvd"
 
-print(user1.email)
+# print(user1.email)
 
 
 """protected attributes"""
 
 class Users:
-    def __int__(self,username,email):
-        self.username=username
-        self._email=email               # protected attribute--> data -->  _
+    def __init__(self,username,email):
+        self._username=username         # protected attribute
+        self.__email=email              # private attribute
 
-# 48.42 seconds on lecture 
+    def access_email(self):
+        print(self.__email)
+    
+emp1=Users("rahul","rahul@gmail")
+# print(emp1.username)              private attribute cannot be accessed outsite class
+# print(emp1.__email)
+
+# emp1.access_email()                 correct way to access private attrubute/getter method
+
+
+"""getter and setter methods """
+ 
+"""Getter:
+The getter method is used to retrieve the value of a private attribute.
+It allows controlled access to the attribute.
+"""
+"""
+Setter: 
+The setter method is used to set or modify the value of a private attribute.
+It allows you to control how the value is updated,
+enabling validation or modification of the data before it’s actually assigned.
+"""
+
+class Employee:
+    def __init__(self,name:str,salary:int):
+        self.name=name
+        self._salary=salary             #private
+        
+    def get_salary(self):               # getter method
+        return self._salary
+    
+    def set_salary(self,salary):       # setter method
+        self._salary=salary
+        return self._salary
+    
+empl1=Employee("ruturaj",5000)
+print(empl1.get_salary())
+
+print(empl1.set_salary(10000))
+print(empl1.get_salary())
