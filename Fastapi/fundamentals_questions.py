@@ -312,15 +312,15 @@ Create a POST endpoint using this model.
 
 Write Code Below:
 """
-from fastapi import FastAPI()
-from pydantic import BaseModel
-app=FastAPI()
+# from fastapi import FastAPI()
+# from pydantic import BaseModel
+# app=FastAPI()
 
 
-class User(BaseModel):
-    name:str
-    price:int
+# class User(BaseModel):
+#     name:str
+#     price:int
 
-@app.post("/user")
-def create_user(user:User):
-    return user
+# @app.post("/user")
+# def create_user(user:User):
+#     return user
