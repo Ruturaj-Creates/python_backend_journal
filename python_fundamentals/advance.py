@@ -437,7 +437,10 @@ class Library:
 # add(a, b)
 
 # Return integer.
+def add(a:int,b:int)-> int:
+    return a+b
 
+# print(add(3,4))
 
 # ----------------------------------------------------------
 
@@ -447,6 +450,10 @@ class Library:
 # get_name()
 
 # Return string.
+def get_name()-> str:
+    return "str"
+
+# print(get_name())
 
 
 # ----------------------------------------------------------
@@ -461,7 +468,13 @@ class Library:
 
 # Output:
 # dict[str, int]
+def process_numbers(numbers:list[int])-> dict[str,int]:
+    return {
+        "count":len(numbers),
+        "sum":sum(numbers)
+    }
 
+# print(process_numbers([2,3,4,5,6,5]))
 
 # ----------------------------------------------------------
 
@@ -472,7 +485,10 @@ class Library:
 # str OR None
 
 # Use Optional.
-
+from typing import Optional
+class User:
+    def __init__(self,name:str,email:Optional[str]):
+        pass
 
 # ----------------------------------------------------------
 
@@ -483,7 +499,8 @@ class Library:
 # int OR float
 
 # Use Union.
-
+def calculator(num:int|float|None):
+    pass
 
 # ----------------------------------------------------------
 
@@ -494,7 +511,15 @@ class Library:
 # - attributes
 # - constructor
 # - methods
-
+class Employee:
+    def __init__(self,id:int,name:str)->None:
+        self.id=id
+        self.name=name
+    
+    def get_details(self)->str:
+        return f"emp name is {self.name} and id is {self.id}"
+em1=Employee(321,"ruturaj")
+# print(em1.get_details())
 
 # ==========================================================
 # ASYNC / AWAIT
