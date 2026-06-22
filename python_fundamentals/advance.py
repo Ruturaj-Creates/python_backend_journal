@@ -169,8 +169,31 @@ emp1=Manager("rutu","500","IT")
 # - sound()
 
 # Loop through all objects and call sound().
+class Animal:
+    def __init__(self,name):
+        self.name=name
 
+    def sound(self):
+        print (f"sound of {self.name} ")
 
+class Dog(Animal):
+    def sound(self):
+        print("Bhowww Bhoww")
+
+class Cat(Animal):
+    def sound(self):
+        print("Meon meaw")
+
+class Cow(Animal):
+    def sound(self):
+        print("hammaa hammaa")
+
+d1 = Dog("Tommy")
+c1 = Cat("Kitty")
+c2 = Cow("Gauri")
+animals=[d1,c1,c2]
+# for animal in animals:
+    # animal.sound()
 # ----------------------------------------------------------
 
 # Q6.
@@ -185,6 +208,53 @@ emp1=Manager("rutu","500","IT")
 # - remove_book()
 # - display_books()
 
+class Book:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+        print("Book added")
+
+    def remove_book(self, title):
+        for book in self.books:
+            if book.title == title:
+                self.books.remove(book)
+                print("Book removed")
+                return
+
+    def display_books(self):
+        for book in self.books:
+            print(f"Title: {book.title}, Author: {book.author}")
+
+
+# # Create Book Objects
+# b1 = Book("Ancient", "Om Swami")
+# b2 = Book("Python Basics", "Ruturaj")
+
+# # Create Library Object
+# library = Library()
+
+# # Add Books
+# library.add_book(b1)
+# library.add_book(b2)
+
+# # Display Books
+# library.display_books()
+
+# # Remove Book
+# library.remove_book("Ancient")
+
+# print("\nAfter Removing:\n")
+
+# # Display Again
+# library.display_books()
 
 # ==========================================================
 # DECORATORS
