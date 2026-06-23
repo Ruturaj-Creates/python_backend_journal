@@ -170,7 +170,12 @@ Return:
     "square": num*num
 }
 """
-
+@app.get("/square/{num}")
+def square(num:int):
+    return{
+        "number":num,
+        "square":num*num
+                }
 
 
 """
@@ -195,7 +200,11 @@ Response:
     "result":30
 }
 """
-
+@app.get("/add")
+def get_result(a:int,b:int):
+    return{
+        "result":a+b
+    }
 
 
 """
@@ -216,7 +225,16 @@ Create POST endpoint:
 
 Return incoming data.
 """
+class Book(BaseModel):
+    title:str
+    price:int
 
+@app.post("/book")
+def create_book(book:Book):
+    return{
+        "title":book.title,
+        "price":book.price
+    }
 
 
 """
@@ -237,7 +255,16 @@ Create POST endpoint:
 
 Return incoming data.
 """
+class Student(BaseModel):
+    name:str
+    age:int
 
+@app.post("/student")
+def create_student(data:Student):
+    return {
+        "name":data.name,
+        "age":data.age
+    }
 
 
 """
@@ -255,6 +282,7 @@ Request:
 
 Output:
 """
+#id:55
 
 
 
@@ -273,7 +301,7 @@ Request:
 
 Output:
 """
-
+#"city":pune
 
 
 """
@@ -298,6 +326,10 @@ Request:
 
 Output:
 """
+{
+    "name":"Laptop",
+    "price":50000
+}
 
 
 
@@ -321,7 +353,10 @@ def get_user():
 
 Output:
 """
-
+{
+        "name":"Ruturaj",
+        
+    }
 
 
 """
@@ -335,7 +370,7 @@ def get_employee():
 
 What is wrong?
 """
-
+#parameter is not passed in function get_employee
 
 
 """
@@ -349,3 +384,4 @@ def search(name:str):
 
 What is wrong?
 """
+#query parameters are not passed in code they are passed in url

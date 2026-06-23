@@ -554,4 +554,386 @@ Client
 10. What is ASGI?
 
 ---
+# FASTAPI INTERMEDIATE NOTES
+
+---
+
+# 1. PYDANTIC MODELS
+
+Pydantic is used for:
+
+* Data Validation
+* Data Parsing
+* Type Checking
+* Request/Response Models
+
+Example:
+
+```python
+from pydantic import BaseModel
+
+class User(BaseModel):
+    name: str
+    age: int
+```
+
+Request:
+
+```json
+{
+    "name":"Ruturaj",
+    "age":23
+}
+```
+
+---
+
+## Optional Fields
+
+```python
+from typing import Optional
+
+class User(BaseModel):
+    name: str
+    age: Optional[int] = None
+```
+
+Valid:
+
+```json
+{
+    "name":"Ruturaj"
+}
+```
+
+---
+
+## Default Values
+
+```python
+class User(BaseModel):
+    name: str
+    age: int = 18
+```
+
+If age is not provided:
+
+```json
+{
+    "name":"Ruturaj"
+}
+```
+
+Output:
+
+```json
+{
+    "name":"Ruturaj",
+    "age":18
+}
+```
+
+---
+
+## Field()
+
+Used for validation.
+
+```python
+from pydantic import BaseModel, Field
+
+class User(BaseModel):
+    name: str = Field(min_length=3,max_length=50)
+    age: int = Field(gt=0,lt=100)
+```
+
+Meaning:
+
+* gt = greater than
+* lt = less than
+
+---
+
+## Email Validation
+
+```python
+from pydantic import BaseModel, EmailStr
+
+class User(BaseModel):
+    email: EmailStr
+```
+
+Valid:
+
+```json
+{
+    "email":"abc@gmail.com"
+}
+```
+
+Invalid:
+
+```json
+{
+    "email":"abc"
+}
+```
+
+---
+
+## Nested Models
+
+```python
+from pydantic import BaseModel
+
+class Address(BaseModel):
+    city: str
+    state: str
+
+class User(BaseModel):
+    name: str
+    address: Address
+```
+
+Request:
+
+```json
+{
+    "name":"Ruturaj",
+    "address":{
+        "city":"Pune",
+        "state":"MH"
+    }
+}
+```
+
+---
+
+## model_dump()
+
+Convert object to dictionary.
+
+```python
+user.model_dump()
+```
+
+Output:
+
+```python
+{
+    "name":"Ruturaj",
+    "age":23
+}
+```
+
+---
+
+# 2. DEPENDENCY INJECTION
+
+Used to reuse logic.
+
+Without Dependency:
+
+```python
+@app.get("/users")
+def get_users():
+    token = validate_token()
+```
+
+With Dependency:
+
+```python
+from fastapi import Depends
+
+def validate_token():
+    return "Valid"
+
+@app.get("/users")
+def get_users(token=Depends(validate_token)):
+    return {"status":token}
+```
+
+Benefits:
+
+* Reusable
+* Cleaner Code
+* Authentication
+* Database Sessions
+
+---
+
+# Common Real-world Example
+
+```python
+def get_db():
+    return db_session
+
+@app.get("/users")
+def get_users(db=Depends(get_db)):
+    pass
+```
+
+---
+
+# 3. MIDDLEWARE
+
+Middleware runs before and after every request.
+```text
+Flow:
+
+Client
+↓
+Middleware
+↓
+Route
+↓
+Middleware
+↓
+Client
+```
+Example:
+
+```python
+from fastapi import Request
+
+@app.middleware("http")
+async def log_requests(request:Request,call_next):
+
+    print("Request Started")
+
+    response = await call_next(request)
+
+    print("Request Finished")
+
+    return response
+```
+
+Uses:
+
+* Logging
+* Authentication
+* Request Tracking
+* Performance Monitoring
+
+---
+
+# 4. ERROR HANDLING
+
+Raise custom errors.
+
+```python
+from fastapi import HTTPException
+
+@app.get("/users/{id}")
+def get_user(id:int):
+
+    if id != 1:
+        raise HTTPException(
+            status_code=404,
+            detail="User Not Found"
+        )
+
+    return {"id":1}
+```
+
+Response:
+
+```json
+{
+    "detail":"User Not Found"
+}
+```
+
+---
+
+## Common Status Codes
+
+200 -> Success
+
+201 -> Created
+
+400 -> Bad Request
+
+401 -> Unauthorized
+
+403 -> Forbidden
+
+404 -> Not Found
+
+500 -> Internal Server Error
+
+---
+
+# 5. ENVIRONMENT VARIABLES
+
+Never hardcode:
+
+```python
+password="admin123"
+```
+
+Bad Practice.
+
+Use .env
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mydb
+```
+
+Install:
+
+```bash
+pip install python-dotenv
+```
+
+Load:
+
+```python
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+db_host = os.getenv("DB_HOST")
+```
+
+Benefits:
+
+* Security
+* Easy Configuration
+* Production Friendly
+
+---
+
+# INTERVIEW QUESTIONS
+
+1. What is Pydantic?
+2. Why use BaseModel?
+3. Difference between Optional and Default Value?
+4. What is Field()?
+5. What is EmailStr?
+6. What are Nested Models?
+7. What is Dependency Injection?
+8. Why use Depends()?
+9. What is Middleware?
+10. Middleware execution flow?
+11. What is HTTPException?
+12. Difference between 401 and 403?
+13. Difference between 200 and 201?
+14. Why use .env files?
+15. Why should secrets not be hardcoded?
+
+---
+
+# MOST ASKED INTERVIEW TOPICS
+
+1. Pydantic Validation
+2. Depends()
+3. HTTPException
+4. Middleware
+5. Environment Variables
+
+Focus heavily on these.
 
